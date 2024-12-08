@@ -10,7 +10,20 @@ import userRouter from "./userRouter.js";
 const rootRouter = express.Router();
 
 rootRouter.use("/api-docs", swaggerUi.serve);
-rootRouter.get("/api-docs", swaggerUi.setup(swaggerDocument));
+rootRouter.get("/api-docs", (req, res, next) => {
+  const urlServer = `${req.protocol}://${req.get("host")}`;
+  console.log(urlServer);
+  swaggerDocument.servers = [
+    // ...swaggerDocument.servers,
+    {
+      url: urlServer,
+      description: `url server deploy`,
+    },
+  ];
+  swaggerUi.setup(swaggerDocument, {
+    swaggerOptions: { persistAuthorization: true },
+  })(req, res);
+});
 
 //middleware =>
 //xử lí cả dữ liệu trước khi gửi đến và gửi về
@@ -35,7 +48,7 @@ rootRouter.get(
   (loiNe, request, response, next) => {
     console.log(loiNe);
     response.json("OKE");
-  }
+  },
 );
 
 rootRouter.use("/video", videoRouter);

@@ -1,7 +1,7 @@
 export const handleSuccessResponse = (
   message = "Lấy dữ liệu thành công",
   code = 200,
-  metaData = null
+  metaData = null,
 ) => {
   return {
     status: `success`,
@@ -14,7 +14,7 @@ export const handleSuccessResponse = (
 export const handleErrorResponse = (
   message = "Internal Server Error",
   code = 500,
-  stack = null
+  stack = null,
 ) => {
   return {
     message,
